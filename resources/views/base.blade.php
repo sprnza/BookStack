@@ -26,6 +26,8 @@
     @if(setting('app-custom-head'))
         {!! setting('app-custom-head') !!}
     @endif
+
+    <script src="{{ versioned_asset('js/common.js') }}"></script>
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
@@ -81,7 +83,7 @@
         </div>
     </div>
 @yield('bottom')
-<script src="{{ versioned_asset('js/common.js') }}"></script>
+
 @yield('scripts')
 </body>
 </html>

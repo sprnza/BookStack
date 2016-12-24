@@ -5,36 +5,6 @@ import markdown from "marked";
 export default function (ngApp, events) {
 
     /**
-     * Common tab controls using simple jQuery functions.
-     */
-    ngApp.directive('tabContainer', function() {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                const $content = element.find('[tab-content]');
-                const $buttons = element.find('[tab-button]');
-
-                if (attrs.tabContainer) {
-                    let initial = attrs.tabContainer;
-                    $buttons.filter(`[tab-button="${initial}"]`).addClass('selected');
-                    $content.hide().filter(`[tab-content="${initial}"]`).show();
-                } else {
-                    $content.hide().first().show();
-                    $buttons.first().addClass('selected');
-                }
-
-                $buttons.click(function() {
-                    let clickedTab = $(this);
-                    $buttons.removeClass('selected');
-                    $content.hide();
-                    let name = clickedTab.addClass('selected').attr('tab-button');
-                    $content.filter(`[tab-content="${name}"]`).show();
-                });
-            }
-        };
-    });
-
-    /**
      * Sub form component to allow inner-form sections to act like their own forms.
      */
     ngApp.directive('subForm', function() {

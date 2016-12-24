@@ -1,5 +1,11 @@
 "use strict";
 
+import Vue from "vue";
+window.Vue = Vue;
+window.Vue.config.interpolate = false;
+import axios from "axios";
+window.axios = axios;
+
 // AngularJS - Create application and load components
 import angular from "angular";
 import "angular-resource";
@@ -204,6 +210,30 @@ $(function () {
             setImage('none');
         }
 
+    });
+
+    // Tabs
+    $('[tab-container]').each(function() {
+        let element = $(this);
+        const $content = element.find('[tab-content]');
+        const $buttons = element.find('[tab-button]');
+
+        if (element.attr('tab-container')) {
+            let initial = element.attr('tab-container');
+            $buttons.filter(`[tab-button="${initial}"]`).addClass('selected');
+            $content.hide().filter(`[tab-content="${initial}"]`).show();
+        } else {
+            $content.hide().first().show();
+            $buttons.first().addClass('selected');
+        }
+
+        $buttons.click(function() {
+            let clickedTab = $(this);
+            $buttons.removeClass('selected');
+            $content.hide();
+            let name = clickedTab.addClass('selected').attr('tab-button');
+            $content.filter(`[tab-content="${name}"]`).show();
+        });
     });
 
     // Detect IE for css

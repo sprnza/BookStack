@@ -2,7 +2,8 @@
 
 @section('content')
 
-    <div class="faded-small toolbar">
+    <div class="faded-small toolbar" xmlns:v-on="http://www.w3.org/1999/xhtml"
+         xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 faded">
@@ -42,15 +43,15 @@
     </div>
 
 
-    <div class="container" id="book-dashboard" ng-controller="BookShowController" book-id="{{ $book->id }}">
+    <div class="container" id="book-dashboard" data-book-id="{{ $book->id }}">
         <div class="row">
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <div class="book-content" ng-show="!searching">
-                    <p class="text-muted" ng-non-bindable>{{$book->description}}</p>
+                <div class="book-content" v-show="!searching">
+                    <p class="text-muted">{{$book->description}}</p>
 
-                    <div class="page-list" ng-non-bindable>
+                    <div class="page-list">
                         <hr>
                         @if(count($bookChildren) > 0)
                             @foreach($bookChildren as $childElement)
@@ -73,14 +74,13 @@
                         @include('partials.entity-meta', ['entity' => $book])
                     </div>
                 </div>
-                <div class="search-results" ng-cloak ng-show="searching">
-                    <h3 class="text-muted">{{ trans('entities.search_results') }} <a ng-if="searching" ng-click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
-                    <div ng-if="!searchResults">
+                <div class="search-results" v-show="searching">
+                    <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
+                    <div v-if="!searchResults">
                         @include('partials/loading-icon')
                     </div>
-                    <div ng-bind-html="searchResults"></div>
+                    <div v-html="searchResults"></div>
                 </div>
-
 
             </div>
 
@@ -96,10 +96,10 @@
                     </p>
                 @endif
                 <div class="search-box">
-                    <form ng-submit="searchBook($event)">
-                        <input ng-model="searchTerm" ng-change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
+                    <form v-on:submit="searchBook">
+                        <input v-model="searchTerm" v-on:input="checkSearching" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
                         <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button ng-if="searching" ng-click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
+                        <button v-if="searching" v-on:click="clearSearch" type="button"><i class="zmdi zmdi-close"></i></button>
                     </form>
                 </div>
                 <div class="activity anim fadeIn">
@@ -109,5 +109,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        new Vue({
+            el: '#book-dashboard',
+            data: {
+                searching: false,
+                searchTerm: '',
+                searchResults: ''
+            },
+            methods: {
+                searchBook: function(event) {
+                    event.preventDefault();
+                    var _this = this;
+                    if (this.searchTerm.length === 0) return;
+                    this.searching = true;
+                    this.searchResults = '';
+                    var searchUrl = window.baseUrl('/search/book/' + this.$el.getAttribute('data-book-id'));
+                    searchUrl += '?term=' + encodeURIComponent(this.searchTerm);
+                    axios.get(searchUrl).then(function(resp) {
+                        _this.searchResults = resp.data;
+                    });
+                },
+                checkSearching: function() {
+                    if (this.searchTerm.length < 1) this.searching = false;
+                },
+                clearSearch: function() {
+                    this.searching = false;
+                    this.searchTerm = '';
+                }
+            }
+        })
+    </script>
 
 @stop
