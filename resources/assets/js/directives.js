@@ -1,5 +1,5 @@
 "use strict";
-import DropZone from "dropzone";
+
 import markdown from "marked";
 
 export default function (ngApp, events) {
@@ -27,60 +27,6 @@ export default function (ngApp, events) {
         };
     });
 
-    /**
-     * DropZone
-     * Used for uploading images
-     */
-    ngApp.directive('dropZone', [function () {
-        return {
-            restrict: 'E',
-            template: `
-            <div class="dropzone-container">
-                <div class="dz-message">{{message}}</div>
-            </div>
-            `,
-            scope: {
-                uploadUrl: '@',
-                eventSuccess: '=',
-                eventError: '=',
-                uploadedTo: '@',
-            },
-            link: function (scope, element, attrs) {
-                scope.message = attrs.message;
-                if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
-                let dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
-                    url: scope.uploadUrl,
-                    init: function () {
-                        let dz = this;
-                        dz.on('sending', function (file, xhr, data) {
-                            let token = window.document.querySelector('meta[name=token]').getAttribute('content');
-                            data.append('_token', token);
-                            let uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
-                            data.append('uploaded_to', uploadedTo);
-                        });
-                        if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
-                        dz.on('success', function (file, data) {
-                            $(file.previewElement).fadeOut(400, function () {
-                                dz.removeFile(file);
-                            });
-                        });
-                        if (typeof scope.eventError !== 'undefined') dz.on('error', scope.eventError);
-                        dz.on('error', function (file, errorMessage, xhr) {
-                            console.log(errorMessage);
-                            console.log(xhr);
-                            function setMessage(message) {
-                                $(file.previewElement).find('[data-dz-errormessage]').text(message);
-                            }
-
-                            if (xhr.status === 413) setMessage('The server does not allow uploads of this size. Please try a smaller file.');
-                            if (errorMessage.file) setMessage(errorMessage.file[0]);
-
-                        });
-                    }
-                });
-            }
-        };
-    }]);
 
     /**
      * Dropdown

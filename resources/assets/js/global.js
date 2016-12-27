@@ -5,6 +5,8 @@ window.Vue = Vue;
 window.Vue.config.interpolate = false;
 import axios from "axios";
 window.axios = axios;
+import DropZone from "dropzone";
+window.DropZone = DropZone;
 
 // AngularJS - Create application and load components
 import angular from "angular";

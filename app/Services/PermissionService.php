@@ -411,7 +411,6 @@ class PermissionService
             $this->currentAction = $permission;
         }
 
-
         $q = $this->entityRestrictionQuery($baseQuery)->count() > 0;
         $this->clean();
         return $q;

@@ -143,7 +143,7 @@ class ImageController extends Controller
             'name' => 'required|min:2|string'
         ]);
         $image = $this->imageRepo->getById($imageId);
-        $this->checkOwnablePermission('image-update', $image);
+        $this->checkOwnablePermission('image-update', $image->page);
         $image = $this->imageRepo->updateImageDetails($image, $request->all());
         return response()->json($image);
     }
@@ -158,7 +158,7 @@ class ImageController extends Controller
     public function destroy(PageRepo $pageRepo, Request $request, $id)
     {
         $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('image-delete', $image);
+        $this->checkOwnablePermission('image-delete', $image->page);
 
         // Check if this image is used on any pages
         $isForced = ($request->has('force') && ($request->get('force') === 'true') || $request->get('force') === true);
