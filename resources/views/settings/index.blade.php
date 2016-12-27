@@ -125,7 +125,7 @@
 
 </div>
 
-@include('partials/image-manager', ['imageType' => 'system'])
+@include('components.image-manager', ['imageType' => 'system'])
 
 @stop
 

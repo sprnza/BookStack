@@ -238,6 +238,31 @@ $(function () {
         });
     });
 
+    // Dropdowns
+    $('[dropdown-toggle]').click(function() {
+        var $toggle = $(this);
+        var $dropdown = $toggle.closest('[dropdown]');
+        var $menu = $dropdown.find('ul').first();
+        var $inputs = $menu.find('input');
+
+        $menu.show().addClass('anim menuIn');
+        if ($inputs.length > 0) {
+            $inputs.first().focus();
+            $dropdown.on('keypress', 'input', event => {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    $menu.hide();
+                    $menu.removeClass('anim menuIn');
+                    return false;
+                }
+            });
+        }
+        $dropdown.mouseleave(function() {
+            $menu.hide();
+            $menu.removeClass('anim menuIn');
+        })
+    });
+
     // Detect IE for css
     if(navigator.userAgent.indexOf('MSIE')!==-1
         || navigator.appVersion.indexOf('Trident/') > 0
