@@ -8,6 +8,11 @@ html {
   overflow-y: scroll;
   &.flexbox {
     overflow-y: hidden;
+    #app {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
   }
 }
 

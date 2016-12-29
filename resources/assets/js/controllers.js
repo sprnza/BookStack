@@ -188,15 +188,6 @@ export default function (ngApp, events) {
             getTags();
 
             /**
-             * Set the order property on all tags.
-             */
-            function setTagOrder() {
-                for (let i = 0; i < $scope.tags.length; i++) {
-                    $scope.tags[i].order = i;
-                }
-            }
-
-            /**
              * When an tag changes check if another empty editable
              * field needs to be added onto the end.
              * @param tag

@@ -43,4 +43,28 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * Get a js representation of the current translations
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getTranslations() {
+        // TODO - Cache if not dev
+        $translations = [
+            'activities' => trans('activities'),
+            'auth' => trans('auth'),
+            'common' => trans('common'),
+            'components' => trans('components'),
+            'entities' => trans('entities'),
+            'errors' => trans('errors'),
+            'pagination' => trans('pagination'),
+            'passwords' => trans('passwords'),
+            'settings' => trans('settings'),
+            'validation' => trans('validation')
+        ];
+        $translationFileString = 'window.translations = ' . json_encode($translations);
+        return response($translationFileString, 200, [
+            'Content-Type' => 'application/javascript'
+        ]);
+    }
+
 }

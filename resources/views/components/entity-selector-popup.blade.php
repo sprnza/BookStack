@@ -12,3 +12,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    new Vue({
+        el: '#entity-selector-wrap'
+    })
+</script>

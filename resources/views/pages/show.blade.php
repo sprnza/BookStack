@@ -108,10 +108,11 @@
         </div>
     </div>
 
-    @include('partials/highlight')
+
 @stop
 
 @section('scripts')
+    @include('partials/highlight')
     <script>
         setupPageShow({{$page->id}});
     </script>

@@ -17,6 +17,7 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
     <script src="{{ baseUrl('/libs/jquery/jquery-ui.min.js?version=1.11.4') }}"></script>
+    <script src="{{ baseUrl('/translations.js') }}"></script>
 
     @yield('head')
 
@@ -27,10 +28,11 @@
         {!! setting('app-custom-head') !!}
     @endif
 
-    <script src="{{ versioned_asset('js/common.js') }}"></script>
+    <script src="{{ versioned_asset('js/global.js') }}"></script>
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
+<div id="app">
     @include('partials/notifications')
 
     <header id="header">
@@ -82,8 +84,16 @@
             <i class="zmdi zmdi-chevron-up"></i> <span>{{ trans('common.back_to_top') }}</span>
         </div>
     </div>
+</div>
 @yield('bottom')
 
 @yield('scripts')
+
+    <script>
+        // Vue root instance
+        new Vue({
+            el: '#app'
+        })
+    </script>
 </body>
 </html>

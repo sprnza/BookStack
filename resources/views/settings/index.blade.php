@@ -125,7 +125,7 @@
 
 </div>
 
-@include('components.image-manager', ['imageType' => 'system'])
+    <image-manager image-type="system"></image-manager>
 
 @stop
 

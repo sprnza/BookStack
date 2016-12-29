@@ -60,7 +60,32 @@ function registerEditorShortcuts(editor) {
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
+function loadCustomPlugins() {
+    window.tinymce.PluginManager.add('customhr', function (editor) {
+        editor.addCommand('InsertHorizontalRule', function () {
+            let hrElem = document.createElement('hr');
+            let cNode = editor.selection.getNode();
+            let parentNode = cNode.parentNode;
+            parentNode.insertBefore(hrElem, cNode);
+        });
+
+        editor.addButton('hr', {
+            icon: 'hr',
+            tooltip: 'Horizontal line',
+            cmd: 'InsertHorizontalRule'
+        });
+
+        editor.addMenuItem('hr', {
+            icon: 'hr',
+            text: 'Horizontal line',
+            cmd: 'InsertHorizontalRule',
+            context: 'insert'
+        });
+    });
+}
+
 export default function() {
+    loadCustomPlugins();
     let settings = {
         selector: '#html-editor',
         content_css: [

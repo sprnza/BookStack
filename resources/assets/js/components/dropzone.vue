@@ -1,20 +1,23 @@
+<template>
+    <div class="dropzone-container"><div class="dz-message" v-text="message"></div></div>
+</template>
 <script>
-    Vue.component('drop-zone', {
-        template: '<div class="dropzone-container"><div class="dz-message" v-text="message"></div></div>',
+    export default {
+        template: '',
         props: ['uploadUrl', 'uploadedTo', 'message', 'eventSuccess', 'eventError'],
         data: function() {
             return {}
         },
         mounted: function() {
-            var _this = this;
+            let _this = this;
             new DropZone(_this.$el, {
                 url: _this.uploadUrl,
                 init: function () {
-                    var dz = this;
+                    let dz = this;
                     dz.on('sending', function (file, xhr, data) {
-                        var token = window.document.querySelector('meta[name=token]').getAttribute('content');
+                        let token = window.document.querySelector('meta[name=token]').getAttribute('content');
                         data.append('_token', token);
-                        var uploadedTo = typeof _this.uploadedTo === 'undefined' ? 0 : _this.uploadedTo;
+                        let uploadedTo = typeof _this.uploadedTo === 'undefined' ? 0 : _this.uploadedTo;
                         data.append('uploaded_to', uploadedTo);
                     });
                     if (typeof _this.eventSuccess !== 'undefined') dz.on('success', _this.eventSuccess);
@@ -38,5 +41,5 @@
                 }
             });
         }
-    });
+    }
 </script>

@@ -19,8 +19,8 @@
 
 
     </div>
-    
-    @include('components.image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
-    @include('partials/entity-selector-popup')
+
+    <image-manager image-type="gallery" uploaded-to="{{ $page->id }}"></image-manager>
+    @include('components.entity-selector-popup')
 
 @stop

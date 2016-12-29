@@ -8,6 +8,23 @@ window.axios = axios;
 import DropZone from "dropzone";
 window.DropZone = DropZone;
 
+import Trans from "./trans";
+let translator = new Trans(window.translations);
+window.trans = translator.get.bind(translator);
+window.Vue.use(translator);
+// Components
+import vueDropZone from "./components/dropzone.vue"
+import vueImageManager from "./components/image-manager.vue";
+import vueBookDashboard from "./components/book-dashboard.vue";
+import vueLoading from "./components/loading.vue";
+import vueEntitySelector from "./components/entity-selector.vue";
+window.Vue.component('dropZone', vueDropZone);
+window.Vue.component('imageManager', vueImageManager);
+window.Vue.component('loading', vueLoading);
+window.Vue.component('bookDashboard', vueBookDashboard);
+window.Vue.component('entitySelector', vueEntitySelector);
+
+
 // AngularJS - Create application and load components
 import angular from "angular";
 import "angular-resource";
@@ -195,7 +212,7 @@ $(function () {
         }
 
         if (action === 'show-image-manager') {
-            window.ImageManager.showExternal((image) => {
+            window.ImageManagerService.show((image) => {
                 if (!resize) {
                     setImage(image);
                     return;
@@ -235,6 +252,38 @@ $(function () {
             $content.hide();
             let name = clickedTab.addClass('selected').attr('tab-button');
             $content.filter(`[tab-content="${name}"]`).show();
+        });
+    });
+
+    // Toolbox
+    $('[toolbox]').each(function() {
+        let elem = $(this);
+        // Get common elements
+        const $buttons = elem.find('[toolbox-tab-button]');
+        const $content = elem.find('[toolbox-tab-content]');
+        const $toggle = elem.find('[toolbox-toggle]');
+
+        // Handle toolbox toggle click
+        $toggle.click((e) => {
+            elem.toggleClass('open');
+        });
+
+        // Set an active tab/content by name
+        function setActive(tabName, openToolbox) {
+            $buttons.removeClass('active');
+            $content.hide();
+            $buttons.filter(`[toolbox-tab-button="${tabName}"]`).addClass('active');
+            $content.filter(`[toolbox-tab-content="${tabName}"]`).show();
+            if (openToolbox) elem.addClass('open');
+        }
+
+        // Set the first tab content active on load
+        setActive($content.first().attr('toolbox-tab-content'), false);
+
+        // Handle tab button click
+        $buttons.click(function (e) {
+            let name = $(this).attr('toolbox-tab-button');
+            setActive(name, true);
         });
     });
 
