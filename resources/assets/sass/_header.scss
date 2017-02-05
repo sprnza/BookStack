@@ -23,7 +23,7 @@ header {
   }
   .links a {
     display: inline-block;
-    padding: $-l;
+    padding: $-m $-l;
     color: #FFF;
     &:last-child {
       padding-right: 0;
@@ -36,13 +36,12 @@ header {
     display: inline-block;
   }
   .avatar {
-    //margin-top: (45px/2);
     width: 30px;
     height: 30px;
   }
   .user-name {
     vertical-align: top;
-    padding-top: $-l;
+    padding-top: $-m;
     display: inline-block;
     cursor: pointer;
     > * {
@@ -89,7 +88,7 @@ header {
 }
 
 form.search-box {
-  margin-top: $-l *0.9;
+  margin-top: $-s;
   display: inline-block;
   position: relative;
   text-align: left;
@@ -128,14 +127,14 @@ form.search-box {
   font-size: 1.8em;
   color: #fff;
   font-weight: 400;
-  padding: $-l $-l $-l 0;
+  padding: $-m $-l $-m 0;
   vertical-align: top;
   line-height: 1;
 }
 .logo-image {
-  margin: $-m $-s $-m 0;
+  margin: $-s $-s $-s 0;
   vertical-align: top;
-  height: 43px;
+  height: 35px;
 }
 
 .breadcrumbs span.sep {

@@ -9,7 +9,7 @@
 @section('content')
 
     <div class="text-center">
-        <div class="center-box">
+        <div class="center-box card">
             <h1>{{ title_case(trans('auth.log_in')) }}</h1>
 
             <form action="{{ baseUrl("/login") }}" method="POST" id="login-form">

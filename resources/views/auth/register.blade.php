@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="text-center">
-        <div class="center-box">
+        <div class="center-box card">
             <h1>{{ title_case(trans('auth.sign_up')) }}</h1>
 
             <form action="{{ baseUrl("/register") }}" method="POST">
