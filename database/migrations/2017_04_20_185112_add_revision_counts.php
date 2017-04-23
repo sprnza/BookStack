@@ -14,17 +14,17 @@ class AddRevisionCounts extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->integer('revision_count');
+            $table->integer('revision_count')->default(1);
         });
         Schema::table('page_revisions', function (Blueprint $table) {
-            $table->integer('revision_number');
+            $table->integer('revision_number')->nullable();
             $table->index('revision_number');
         });
 
         // Update revision count
         $pTable = DB::getTablePrefix() . 'pages';
         $rTable = DB::getTablePrefix() . 'page_revisions';
-        DB::statement("UPDATE ${pTable} SET ${pTable}.revision_count=(SELECT count(*) FROM ${rTable} WHERE ${rTable}.page_id=${pTable}.id)");
+        DB::statement("UPDATE ${pTable} SET revision_count=(SELECT count(*) FROM ${rTable} WHERE ${rTable}.page_id=${pTable}.id)");
     }
 
     /**

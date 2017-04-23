@@ -13,9 +13,11 @@ class AddSearchIndexes extends Migration
     public function up()
     {
         $prefix = DB::getTablePrefix();
-        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT search(name, text)");
-        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT search(name, description)");
-        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT search(name, description)");
+        if (strpos(DB::getDefaultConnection(), 'mysql') === 0) {
+            DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT search(name, text)");
+            DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT search(name, description)");
+            DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT search(name, description)");
+        }
     }
 
     /**
@@ -25,14 +27,16 @@ class AddSearchIndexes extends Migration
      */
     public function down()
     {
-        Schema::table('pages', function(Blueprint $table) {
-            $table->dropIndex('search');
-        });
-        Schema::table('books', function(Blueprint $table) {
-            $table->dropIndex('search');
-        });
-        Schema::table('chapters', function(Blueprint $table) {
-            $table->dropIndex('search');
-        });
+        if (strpos(DB::getDefaultConnection(), 'mysql') === 0) {
+            Schema::table('pages', function (Blueprint $table) {
+                $table->dropIndex('search');
+            });
+            Schema::table('books', function (Blueprint $table) {
+                $table->dropIndex('search');
+            });
+            Schema::table('chapters', function (Blueprint $table) {
+                $table->dropIndex('search');
+            });
+        }
     }
 }

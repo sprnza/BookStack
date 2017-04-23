@@ -13,9 +13,9 @@ class AddSlugToRevisions extends Migration
     public function up()
     {
         Schema::table('page_revisions', function (Blueprint $table) {
-            $table->string('slug');
+            $table->string('slug')->default('');
             $table->index('slug');
-            $table->string('book_slug');
+            $table->string('book_slug')->default('');
             $table->index('book_slug');
         });
     }

@@ -29,6 +29,7 @@ class RemoveHiddenRoles extends Migration
             'name' => 'Guest',
             'system_name' => 'public',
             'email_confirmed' => true,
+            'password' => bcrypt(str_random(32)),
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);

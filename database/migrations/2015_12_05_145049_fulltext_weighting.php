@@ -13,9 +13,11 @@ class FulltextWeighting extends Migration
     public function up()
     {
         $prefix = DB::getTablePrefix();
-        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT name_search(name)");
-        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT name_search(name)");
-        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT name_search(name)");
+        if (strpos(DB::getDefaultConnection(), 'mysql') === 0) {
+            DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT name_search(name)");
+            DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT name_search(name)");
+            DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT name_search(name)");
+        }
     }
 
     /**
@@ -25,14 +27,16 @@ class FulltextWeighting extends Migration
      */
     public function down()
     {
-        Schema::table('pages', function(Blueprint $table) {
-            $table->dropIndex('name_search');
-        });
-        Schema::table('books', function(Blueprint $table) {
-            $table->dropIndex('name_search');
-        });
-        Schema::table('chapters', function(Blueprint $table) {
-            $table->dropIndex('name_search');
-        });
+        if (strpos(DB::getDefaultConnection(), 'mysql') === 0) {
+            Schema::table('pages', function (Blueprint $table) {
+                $table->dropIndex('name_search');
+            });
+            Schema::table('books', function (Blueprint $table) {
+                $table->dropIndex('name_search');
+            });
+            Schema::table('chapters', function (Blueprint $table) {
+                $table->dropIndex('name_search');
+            });
+        }
     }
 }

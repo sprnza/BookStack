@@ -11,6 +11,7 @@ Homestead.yaml
 /storage/images
 _ide_helper.php
 /storage/debugbar
+/storage/database.sqlite
 .phpstorm.meta.php
 yarn.lock
 /bin

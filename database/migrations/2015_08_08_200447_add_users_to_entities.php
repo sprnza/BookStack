@@ -13,20 +13,20 @@ class AddUsersToEntities extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
         });
         Schema::table('chapters', function (Blueprint $table) {
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
         });
         Schema::table('images', function (Blueprint $table) {
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
         });
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
         });
     }
 

@@ -17,7 +17,7 @@ class UpdatePermissionsAndRoles extends Migration
         $editorRole = DB::table('roles')->where('name', '=', 'editor')->first();
 
         // Delete old permissions
-        $permissions = DB::table('permissions')->delete();
+        DB::table('permissions')->delete();
 
         // Create & attach new admin permissions
         $permissionsToCreate = [
@@ -77,7 +77,7 @@ class UpdatePermissionsAndRoles extends Migration
         $adminRoleId = DB::table('roles')->where('name', '=', 'admin')->first()->id;
 
         // Delete old permissions
-        $permissions = DB::table('permissions')->delete();
+        DB::table('permissions')->delete();
 
         // Create default CRUD permissions and allocate to admins and editors
         $entities = ['Book', 'Page', 'Chapter', 'Image'];

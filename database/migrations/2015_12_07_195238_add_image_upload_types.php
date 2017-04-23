@@ -14,8 +14,8 @@ class AddImageUploadTypes extends Migration
     public function up()
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->string('path', 400);
-            $table->string('type')->index();
+            $table->string('path', 400)->default('');
+            $table->string('type')->default('gallery')->index();
         });
 
         Image::all()->each(function($image) {
